@@ -1,15 +1,26 @@
-<h1> Galpões & Estoque</h1>
+<section>
+  <h2>Galpões</h2>
+  <div>
+  <%= notice %>
+  </div>
 
-<h2>Galpões</h2>
+  <div>
+  <h3><%= link_to('Cadastrar Galpão', new_warehouse_path) %><h3>
+  </div>
+  <% @warehouse.each do |w| %>
+    <div>
+      <h3><%= link_to(w.name, warehouse_path(w.id)) %><h3>
+      <dl>
+        <dt><strong>Código: </strong></dt>
+        <dd><%= w.code %></dd>
+        <dt><strong>Cidade: </strong></dt>
+        <dd><%=w.city %></dd>
+        <dt><strong>Área: </strong></dt>
+        <dd><%=w.area %> m2</dd>
+      </div>
+  <% end %>
 
-<% @warehouse.each do |w| %>
-  <%= link_to(w.name, warehouse_path(w.id)) %>
-    <a hreaf="http://campuscode.com.br">Site da Campus Code</a>
-    Código: <%= w.code %>
-    Cidade: <%= w.city %>
-  <%= w.area%> m2
-<% end %>
-
-<% if @warehouse.empty? %>
-  <p> Não existem galpões cadastrados</p>
-<% end %>
+  <% if @warehouse.empty? %>
+    <p> Não existem galpões cadastrados</p>
+  <% end %>
+</section>
