@@ -1,8 +1,13 @@
-<section>
+<p>
+ <%= I18n.translate("hello") %>
+</p>
+<p>
+  <%= I18n.localize(Date.today) %>
+</p>
+
+<section id="warehouses">
+
   <h2>Galpões</h2>
-  <div>
-  <%= notice %>
-  </div>
 
   <div>
   <h3><%= link_to('Cadastrar Galpão', new_warehouse_path) %><h3>
