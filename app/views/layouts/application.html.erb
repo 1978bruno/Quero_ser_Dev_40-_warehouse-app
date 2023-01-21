@@ -7,15 +7,20 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
     <header>
       <h1> Galpões & Estoque</h1>
+      <nav>
+        <%= link_to 'Fornecedores', suppliers_path %>
+      </nav>
     </header>
     <main>
       <div>
-      <%= notice %>
+        <%= alert %>
+        <%= notice %>
       </div>
       <%= yield %>
     </main>

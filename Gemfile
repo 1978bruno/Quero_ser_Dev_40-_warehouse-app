@@ -15,6 +15,9 @@ gem "sqlite3", "~> 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
+# Use the Bootstrap to implement interactive screen
+gem 'bootstrap'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
@@ -30,3 +33,5 @@ group :development do
   # gem "spring"
 end
 
+
+gem "importmap-rails", "~> 1.1"
