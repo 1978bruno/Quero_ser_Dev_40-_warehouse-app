@@ -1,0 +1,18 @@
+<h1><%= @product_model.name %></h1>
+
+<dl>
+  <dt>Código único:</dt>
+  <dd><%= @product_model.sku %></dd>
+</dl>
+<dl>
+  <dt>Dimensão:</dt>
+  <dd><%= @product_model.height %> x <%= @product_model.width %> x <%= @product_model.depht %></dd>
+</dl>
+<dl>
+  <dt>Peso:</dt>
+  <dd><%= @product_model.weight %>g</dd>
+</dl>
+<dl>
+  <dt>Fornecedor:</dt>
+  <dd><%= @product_model.supplier.brand_name %></dd>
+</dl>
