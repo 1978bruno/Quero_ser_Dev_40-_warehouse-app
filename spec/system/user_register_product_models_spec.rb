@@ -2,11 +2,14 @@ require 'rails_helper'
 
 describe 'Usuário vê modelos de produtos' do
   it 'com sucesso' do
+    user = User.create!(email:'bruno@email.com', password:'password')
     supplier = Supplier.create!(corp_name: 'Samsung Eletronics LTDA', brand_name: 'Samsung', regist_number:'4344721600',
                               full_addr: 'Av. das Palmas, 100', city: 'Bauru', state: 'SP', 
                               email: 'contato@samsung.com')
 
-    visit(root_path)
+    
+    visit root_path
+    login_as(user)
     click_on 'Modelos de Produtos'
     click_on 'Cadastrar Novo'
     fill_in 'Nome' , with: 'TV 40"'
