@@ -20,7 +20,7 @@ describe 'Usuário se autentica' do
     expect(page).to have_content 'Login efetuado com sucesso'
   end
   it 'faz logout' do
-    User.create!(email:'bruno@email.com', password:'password')
+    User.create!(name: 'Bruno', email:'bruno@email.com', password:'password')
 
     visit root_path
     click_on 'Entrar'

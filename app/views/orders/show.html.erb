@@ -1,0 +1,18 @@
+<h1><%= Order.model_name.human %></h1>
+
+<dl>
+  <dt><%= Order.human_attribute_name(:warehouse_id) %>:</dt>
+  <dd><%= @order.warehouse.full_description %></dd>
+</dl>
+<dl>
+  <dt><%= Order.human_attribute_name(:supplier_id) %>:</dt>
+  <dd><%= @order.supplier.corp_name %></dd>
+</dl>
+<dl>
+  <dt><%= Order.human_attribute_name(:user_id) %>:</dt>
+  <dd><%= @order.user.description %></dd>
+</dl>
+<dl>
+  <dt><%= Order.human_attribute_name(:estimated_delivery_date) %>:</dt>
+  <dd><%= I18n.localize(@order.estimated_delivery_date) %></dd>
+</dl>
