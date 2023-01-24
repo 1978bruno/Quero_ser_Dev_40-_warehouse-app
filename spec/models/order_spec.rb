@@ -13,11 +13,39 @@ RSpec.describe Order, type: :model do
                                     description: 'Galpão destinado para cargas internacionais')
       
       order = Order.new(user: user, warehouse: warehouse, supplier: supplier, 
-                        estimated_delivery_date: '2023-01-23')
+                        estimated_delivery_date: 1.day.from_now)
 
-      result = order.valid?
+      expect(order.valid?).to be true
+    end
+    it 'data estimada de entrega deve ser obrigatória' do
+      order = Order.new(estimated_delivery_date: '')
 
-      expect(result).to be true
+      order.valid?
+
+      expect(order.errors.include?(:estimated_delivery_date)).to be true
+    end
+    it 'data estimada de entrega não deve ser anterior' do
+      order = Order.new(estimated_delivery_date: 5.day.ago)
+
+      order.valid?
+
+      expect(order.errors.include?(:estimated_delivery_date)).to be true
+      expect(order.errors[:estimated_delivery_date]).to include(" deve ser futuro")
+    end
+    it 'data estimada de entrega deve ser diferente de hoje' do
+      order = Order.new(estimated_delivery_date: Date.today)
+
+      order.valid?
+
+      expect(order.errors.include?(:estimated_delivery_date)).to be true
+      expect(order.errors[:estimated_delivery_date]).to include(" deve ser futuro")
+    end
+    it 'data estimada de entrega deve ser igual ou maior que amanhã' do
+      order = Order.new(estimated_delivery_date: 1.day.from_now)
+
+      order.valid?
+
+      expect(order.errors.include?(:estimated_delivery_date)).to be false
     end
   end
   describe 'gera um código aleatório' do
@@ -31,7 +59,7 @@ RSpec.describe Order, type: :model do
                                     description: 'Galpão destinado para cargas internacionais')
       
       order = Order.new(user: user, warehouse: warehouse, supplier: supplier, 
-                        estimated_delivery_date: '2023-01-23')
+                        estimated_delivery_date: 1.day.from_now)
 
       order.save
 
@@ -47,9 +75,9 @@ RSpec.describe Order, type: :model do
                                     address: 'Avenida do aeroporto, 1000', cep: '15000-000', 
                                     description: 'Galpão destinado para cargas internacionais')
       first_order = Order.create!(user: user, warehouse: warehouse, supplier: supplier, 
-                                 estimated_delivery_date: '2023-01-23')
+                                 estimated_delivery_date: 1.day.from_now)
       second_order = Order.new(user: user, warehouse: warehouse, supplier: supplier, 
-                              estimated_delivery_date: '2023-01-23')
+                              estimated_delivery_date: 1.day.from_now)
 
       second_order.save
 

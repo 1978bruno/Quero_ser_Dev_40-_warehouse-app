@@ -3,7 +3,8 @@ class Order < ApplicationRecord
   belongs_to :supplier
   belongs_to :user
 
-  validates :code, presence: true
+  validates :code, :estimated_delivery_date, presence: true
+  validate :estimated_delivery_date_is_in_future
 
   before_validation :generate_code
 
@@ -11,5 +12,10 @@ class Order < ApplicationRecord
 
   def generate_code
     self.code = SecureRandom.alphanumeric(8).upcase
+  end
+  def estimated_delivery_date_is_in_future
+    if self.estimated_delivery_date.present? && self.estimated_delivery_date <= Date.today
+      self.errors.add(:estimated_delivery_date, " deve ser futuro")
+    end
   end
 end
