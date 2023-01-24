@@ -23,7 +23,7 @@ describe 'Usuário cadastra um pedido' do
     warehouse = Warehouse.create!(name: 'Rio', code: 'SDU', city: 'Rio de Janeiro', area: 60_000,
                                   address: 'Avenida do aeroporto, 1000', cep: '15000-000', 
                                   description: 'Galpão destinado para cargas internacionais')
-
+    allow(SecureRandom).to receive(:alphanumeric).with(8).and_return('ABCD1234')
 
     login_as(user)
     visit root_path
@@ -34,6 +34,7 @@ describe 'Usuário cadastra um pedido' do
     click_on 'Gravar'
 
     expect(page).to have_content 'Pedido registrado com sucesso'
+    expect(page).to have_content 'Pedido '
     expect(page).to have_content 'Galpão Destino: SDU - Rio'
     expect(page).to have_content 'Fornecedor: Samsung Eletronics LTDA'
     expect(page).to have_content 'Usuário Responsável: Bruno - bruno@email.com'
