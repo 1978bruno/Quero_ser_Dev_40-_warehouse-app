@@ -25,7 +25,7 @@ RSpec.describe Order, type: :model do
       expect(order.errors.include?(:estimated_delivery_date)).to be true
     end
     it 'data estimada de entrega não deve ser anterior' do
-      order = Order.new(estimated_delivery_date: 5.day.ago)
+      order = Order.new(estimated_delivery_date: 1.day.ago)
 
       order.valid?
 

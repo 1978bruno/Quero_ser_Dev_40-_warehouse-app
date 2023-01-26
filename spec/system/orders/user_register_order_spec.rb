@@ -24,13 +24,14 @@ describe 'Usuário cadastra um pedido' do
                                   address: 'Avenida do aeroporto, 1000', cep: '15000-000', 
                                   description: 'Galpão destinado para cargas internacionais')
     allow(SecureRandom).to receive(:alphanumeric).with(8).and_return('ABCD1234')
+    date_valid = 1.day.from_now
 
     login_as(user)
     visit root_path
     click_on 'Registrar Pedido'
     select 'SDU - Rio', from: 'Galpão Destino'
     select supplier.corp_name, from: 'Fornecedor'
-    fill_in 'Data Prevista', with: '20/12/2023'
+    fill_in 'Data Prevista', with: date_valid.strftime('%d/%m/%Y')
     click_on 'Gravar'
 
     expect(page).to have_content 'Pedido registrado com sucesso'
@@ -38,9 +39,28 @@ describe 'Usuário cadastra um pedido' do
     expect(page).to have_content 'Galpão Destino: SDU - Rio'
     expect(page).to have_content 'Fornecedor: Samsung Eletronics LTDA'
     expect(page).to have_content 'Usuário Responsável: Bruno - bruno@email.com'
-    expect(page).to have_content 'Data Prevista: 20/12/2023'
+    expect(page).to have_content  date_valid.strftime('%d/%m/%Y')
     expect(page).not_to have_content 'Galpão destino: Belo Horizonte'
     expect(page).not_to have_content 'Fornecedor: Spark Industries Brasil LTDA'
+  end
+  it 'e não informa a data de entrega' do
+    user = User.create!(name: 'Bruno', email:'bruno@email.com', password:'password')
+    supplier = Supplier.create!(corp_name: 'Samsung Eletronics LTDA', brand_name: 'Samsung', 
+                              regist_number:'4344721600', full_addr: 'Av. das Palmas, 100', 
+                              city: 'Bauru', state: 'SP', email: 'contato@samsung.com')
+    warehouse = Warehouse.create!(name: 'Rio', code: 'SDU', city: 'Rio de Janeiro', area: 60_000,
+                                  address: 'Avenida do aeroporto, 1000', cep: '15000-000', 
+                                  description: 'Galpão destinado para cargas internacionais')
 
+    login_as(user)
+    visit root_path
+    click_on 'Registrar Pedido'
+    select 'SDU - Rio', from: 'Galpão Destino'
+    select supplier.corp_name, from: 'Fornecedor'
+    fill_in 'Data Prevista', with: ''
+    click_on 'Gravar'
+
+    expect(page).to have_content 'Não foi possível registrar o pedido'
+    expect(page).to have_content 'Data prevista de Entrega não pode ficar em branco'
   end
 end
