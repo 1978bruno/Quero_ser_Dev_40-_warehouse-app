@@ -19,19 +19,22 @@ describe 'Usuario vê seus próprios pedidos' do
                                   regist_number:'4344721600', full_addr: 'Av. das Palmas, 100', 
                                   city: 'Bauru', state: 'SP', email: 'contato@samsung.com')
     order1 = Order.create!(user: joao, warehouse: warehouse, supplier: supplier, 
-                                  estimated_delivery_date: 1.day.from_now)
+                                  estimated_delivery_date: 1.day.from_now, status: 'pending')
     order2 = Order.create!(user: bruno, warehouse: warehouse, supplier: supplier, 
-                                  estimated_delivery_date: 1.day.from_now)
+                                  estimated_delivery_date: 1.day.from_now, status: 'delivered')
     order3 = Order.create!(user: joao, warehouse: warehouse, supplier: supplier, 
-                                  estimated_delivery_date: 1.week.from_now)
+                                  estimated_delivery_date: 1.week.from_now, status: 'canceled')
     
     login_as(joao)
     visit root_path
     click_on 'Meus Pedidos'
 
     expect(page).to have_content order1.code
+    expect(page).to have_content 'Pendente'
     expect(page).to have_content order3.code
+    expect(page).to have_content 'Cancelado'
     expect(page).not_to have_content order2.code
+    expect(page).not_to have_content 'Entregue'
   end
   it 'e visita um pedido' do
     bruno = User.create!(name: 'Bruno', email:'bruno@email.com', password:'password')

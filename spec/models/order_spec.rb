@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
   describe '#valid?' do
     it 'deve ter um código' do
       user = User.create!(name: 'Bruno', email:'bruno@email.com', password:'password')

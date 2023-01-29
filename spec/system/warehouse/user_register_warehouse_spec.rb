@@ -37,7 +37,7 @@ describe 'Usuário cadastra um galpão' do
     expect(page).to have_content '32000 m2'
   end
 
-  it 'Com sucesso' do
+  it 'sem sucesso' do
 
 
     visit root_path

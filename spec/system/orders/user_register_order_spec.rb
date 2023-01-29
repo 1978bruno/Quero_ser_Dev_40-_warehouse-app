@@ -39,6 +39,7 @@ describe 'Usuário cadastra um pedido' do
     expect(page).to have_content 'Galpão Destino: SDU - Rio'
     expect(page).to have_content 'Fornecedor: Samsung Eletronics LTDA'
     expect(page).to have_content 'Usuário Responsável: Bruno - bruno@email.com'
+    expect(page).to have_content 'Situação do Pedido: Pendente'
     expect(page).to have_content  date_valid.strftime('%d/%m/%Y')
     expect(page).not_to have_content 'Galpão destino: Belo Horizonte'
     expect(page).not_to have_content 'Fornecedor: Spark Industries Brasil LTDA'
