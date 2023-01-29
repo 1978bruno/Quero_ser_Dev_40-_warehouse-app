@@ -79,4 +79,32 @@ describe 'Usuario vê seus próprios pedidos' do
     expect(current_path).to eq root_path
     expect(page).to have_content 'Você não possui acesso a este pedido'
   end
+  it 'e vê itens do pedido' do
+    supplier = Supplier.create!(corp_name: 'Samsung Eletronics LTDA', brand_name: 'Samsung', 
+                                regist_number:'4344721600', full_addr: 'Av. das Palmas, 100', 
+                                city: 'Bauru', state: 'SP', email: 'contato@samsung.com')
+    joao = User.create!(name: 'João', email:'joao@email.com', password:'password')
+    warehouse = Warehouse.create!(name: 'SDU', code: 'SDU1', city: 'Rio de Janeiro', area: 60_000,
+                                  address: 'Avenida do aeroporto, 1000', cep: '15000-000', 
+                                  description: 'Galpão destinado para cargas internacionais')
+    product_a = ProductModel.create!(name: 'Produto A', weight: 15, width: 10, height:20, depht: 30, 
+                                     supplier: supplier, sku: 'PRODUTO-A')
+    product_b = ProductModel.create!(name: 'Produto B', weight: 15, width: 10, height:20, depht: 30, 
+                                    supplier: supplier, sku: 'PRODUTO-B')
+    product_c = ProductModel.create!(name: 'Produto C', weight: 15, width: 10, height:20, depht: 30, 
+                                    supplier: supplier, sku: 'PRODUTO-C')
+    order = Order.create!(user: joao, warehouse: warehouse, supplier: supplier, 
+                          estimated_delivery_date: 1.day.from_now, status: 'pending')
+    OrderItem.create!(product_model: product_a, order: order, quantity:19)
+    OrderItem.create!(product_model: product_b, order: order, quantity:12)
+
+    login_as(joao)
+    visit root_path
+    click_on 'Meus Pedidos'
+    click_on order.code
+    expect(page).to have_content 'Itens do Pedido'
+    expect(page).to have_content '19 x Produto A'
+    expect(page).to have_content '12 x Produto B'
+
+  end
 end

@@ -21,6 +21,12 @@
   <dt><%= Order.human_attribute_name(:status) %>:</dt>
   <dd><%= I18n.t(@order.status) %></dd>
 </dl>
+
+<h2>Itens do Pedido</h2>
+<% @order.order_items.each do |item| %>
+  <%= item.quantity %> x <%= item.product_model.name %>
+<% end %>
+
 <% if @order.pending? %>
   <%= button_to 'Marcar como entregue', delivered_order_path(@order.id) %>
   <%= button_to 'Marcar como cancelado', canceled_order_path(@order.id) %>
