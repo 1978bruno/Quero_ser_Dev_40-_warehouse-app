@@ -17,7 +17,7 @@ describe 'Usuário se autentica' do
 
     expect(page).to have_content 'maria@email.com'
     expect(page).to have_button 'Sair'
-    expect(page).to have_content 'Boas vindas! Você realizou seu registro com sucesso.'
+    expect(page).to have_content 'Login efetuado com sucesso. Se não foi autorizado, a confirmação será enviada por e-mail'
     user = User.last
     expect(user.name).to eq 'Maria'
   end
