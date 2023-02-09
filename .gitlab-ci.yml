@@ -16,7 +16,6 @@ stages:
 setup:
   stage: build
   script:
-    - curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
     - apt-get update
     - bin/setup
     - gem install bundler-audit
@@ -25,7 +24,6 @@ rspec:
   stage: test
 
   script:
-    - curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
     - apt-get update
     - bundle config set --local path 'vendor/ruby'
     - bundle install
