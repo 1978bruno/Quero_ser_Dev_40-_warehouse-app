@@ -1,0 +1,39 @@
+image: ruby:3.1.2
+
+cache:
+  key:
+    files:
+      - Gemfile.lock
+    prefix: $CI_COMMIT_REF_SLUG
+  paths:
+    - vendor/ruby
+
+stages:
+  - build
+  - test
+  - security
+
+setup:
+  stage: build
+  script:
+    - curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
+    - apt-get update
+    - bin/setup
+    - gem install bundler-audit
+
+rspec:
+  stage: test
+
+  script:
+    - curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
+    - apt-get update
+    - bundle config set --local path 'vendor/ruby'
+    - bundle install
+    - bundle exec rspec
+
+audit:
+  stage: security
+
+  script:
+    - gem install bundler-audit
+    - bundle-audit
