@@ -16,7 +16,6 @@ stages:
 setup:
   stage: build
   script:
-    - apt-get update
     - bin/setup
     - gem install bundler-audit
 
@@ -24,7 +23,6 @@ rspec:
   stage: test
 
   script:
-    - apt-get update
     - bundle config set --local path 'vendor/ruby'
     - bundle install
     - bundle exec rspec
